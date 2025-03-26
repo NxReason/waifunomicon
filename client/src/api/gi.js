@@ -20,4 +20,4 @@ const characters = {
   },
 };
 
-export { characters };
+export default { characters };
