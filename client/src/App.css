@@ -33,14 +33,3 @@
 .page {
   padding: 1rem;
 }
-
-.list-characters {
-  list-style: none;
-}
-
-.character-item {
-  width: 300px;
-  height: 100px;
-  margin-bottom: 1rem;
-  background-color: var(--color-main-light);
-}

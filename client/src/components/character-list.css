@@ -1,0 +1,36 @@
+.list-characters {
+  list-style: none;
+}
+
+.character-item {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  width: 300px;
+  height: 100px;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: var(--color-main-light);
+}
+
+.character-name {
+  margin-top: 0.5rem;
+}
+
+.gi-character-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn-character-new {
+  background-color: var(--color-main-dark);
+  width: 200px;
+  align-self: end;
+}
+.btn-character-new:hover {
+  background-color: var(--color-component);
+}
+.character-controls > *:not(:last-child) {
+  margin-right: 0.5rem;
+}

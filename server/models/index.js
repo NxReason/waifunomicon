@@ -1,8 +1,11 @@
 const conn = require('./conn');
 const GICharacter = require('./GICharacter');
+const isDev = process.env.NODE_ENV === 'dev';
 
 async function sync() {
-  await conn.sync({ force: true });
+  if (isDev) {
+    await conn.sync({ force: true });
+  }
 }
 
 function isConnected() {

@@ -11,12 +11,79 @@ const characters = {
         const data = await res.json();
         return data.characters;
       }
-      console.error(`Get all genshin characters: ${res.status}`);
+      console.error(`Error: get all genshin characters (status ${res.status})`);
       return null;
     } catch (err) {
       console.error(`Error: unable to get genshin characters (${err})`);
       return null;
     }
+  },
+
+  async create(character) {
+    console.log('in api', character);
+    const path = `${BASE_PATH}`;
+    const payload = {
+      method: 'POST',
+      body: JSON.stringify({ character }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await fetch(path, payload);
+      if (res.ok) {
+        const data = await res.json();
+        return data.character;
+      }
+      console.error(`Error: creating character (status ${res.status})`);
+    } catch (err) {
+      console.error(`Error: creating character (${err})`);
+    }
+    return null;
+  },
+
+  async update(character) {
+    console.log('in api', character);
+    const path = `${BASE_PATH}/${character.id}`;
+    const payload = {
+      method: 'PUT',
+      body: JSON.stringify({ character }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await fetch(path, payload);
+      if (res.ok) {
+        const data = await res.json();
+        return data.character;
+      }
+      console.error(`Error: updating character (status ${res.status})`);
+    } catch (err) {
+      console.error(`Error: updating character (${err})`);
+    }
+    return null;
+  },
+
+  async remove(id) {
+    const path = `${BASE_PATH}/${id}`;
+    const payload = {
+      method: 'DELETE',
+    };
+
+    try {
+      const res = await fetch(path, payload);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+      console.error(`Error: removing character (status ${res.status})`);
+    } catch (err) {
+      console.error(`Error: removing character (${err})`);
+    }
+    return null;
   },
 };
 

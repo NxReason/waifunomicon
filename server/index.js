@@ -19,6 +19,8 @@ if (isDev) {
   );
 }
 
+app.use(express.json());
+
 app.use('/', router);
 
 const server = app.listen(PORT, async () => {

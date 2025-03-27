@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { GICharacter } = require('../models').models;
+const controller = require('../controllers/gi-characters');
 
-router.get('/', async (req, res) => {
-  const characters = await GICharacter.findAll();
-  res.json({ characters });
-});
+router.get('/', controller.all);
+router.post('/', controller.create);
+router.put('/:id', controller.update);
+router.delete('/:id', controller.remove);
 
 module.exports = router;
