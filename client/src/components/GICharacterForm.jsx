@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function GICharacterForm({ saveHandler, defaultName }) {
+function GICharacterForm({ saveHandler, resetHandler, defaultName }) {
   const [name, setName] = useState(defaultName);
 
   useEffect(() => {
@@ -17,16 +17,26 @@ function GICharacterForm({ saveHandler, defaultName }) {
     setName('');
   };
 
+  const handleReset = e => {
+    e.preventDefault();
+    resetHandler();
+    setName('');
+  };
+
   return (
     <form className="gi-character-form">
       <input
         type="text"
         placeholder="name"
         value={name}
+        className="name-input"
         onInput={handleInput}
       />
       <button onClick={handleSave} className="btn-character-new">
         Save
+      </button>
+      <button onClick={handleReset} className="btn-character-reset">
+        Reset
       </button>
     </form>
   );

@@ -6,29 +6,42 @@
   display: flex;
   align-items: start;
   justify-content: space-between;
-  width: 300px;
   height: 100px;
   margin-bottom: 1rem;
   padding: 0.5rem;
   background-color: var(--color-main-light);
 }
-
 .character-name {
   margin-top: 0.5rem;
 }
 
 .gi-character-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'nameInput nameInput'
+    'saveBtn   resetBtn';
+  row-gap: 0.5rem;
+  column-gap: 0.25rem;
+}
+.name-input {
+  grid-area: nameInput;
+}
+.btn-character-new {
+  grid-area: saveBtn;
+}
+.btn-character-reset {
+  grid-area: resetBtn;
 }
 
-.btn-character-new {
+.btn-character-new,
+.btn-character-reset {
   background-color: var(--color-main-dark);
-  width: 200px;
-  align-self: end;
 }
-.btn-character-new:hover {
+.btn-character-new:hover,
+.btn-character-reset:hover {
   background-color: var(--color-component);
 }
 .character-controls > *:not(:last-child) {

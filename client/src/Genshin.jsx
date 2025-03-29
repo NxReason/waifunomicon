@@ -1,70 +1,120 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import api from './api/gi';
-import CharacterList from './components/CharacterList';
+import CharacterList from './components/GICharacterList';
 import GICharacterForm from './components/GICharacterForm';
 
 function Genshin() {
-  const [characters, setCharacters] = useState([]);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [updatingId, setUpdatingId] = useState(null);
+  const [state, dispatch] = useReducer(charactersReducer, initialState);
 
   useEffect(() => {
     api.characters.all().then(charData => {
       if (charData) {
-        setCharacters(charData);
+        dispatch({ type: 'SET_CHARACTER_LIST', payload: charData });
       }
     });
   }, []);
 
-  const selectUpdatingChar = char => {
-    setIsUpdating(true);
-    setUpdatingId(char.id);
+  const setEditingId = id => {
+    dispatch({
+      type: 'SET_EDITING_CHARACTER',
+      payload: id,
+    });
   };
 
   const removeCharacter = async id => {
-    const result = await api.characters.remove(id);
-    if (result) {
-      setCharacters(characters.filter(c => c.id !== id));
+    const ok = await api.characters.remove(id);
+    if (ok) {
+      dispatch({
+        type: 'REMOVE_CHARACTER',
+        payload: id,
+      });
+    }
+  };
+
+  const processFormSubmit = async character => {
+    if (state.editingId) await updateCharacter(character);
+    else await saveCharacter(character);
+  };
+
+  const updateCharacter = async character => {
+    const charData = await api.characters.update({
+      ...character,
+      id: state.editingId,
+    });
+    if (charData) {
+      dispatch({
+        type: 'UPDATE_CHARACTER',
+        payload: charData,
+      });
     }
   };
 
   const saveCharacter = async character => {
-    const result = await api.characters.create(character);
-    if (result) {
-      setCharacters([...characters, result]);
-    }
-  };
-
-  const updateCharacter = async ({ name }) => {
-    const result = await api.characters.update({ id: updatingId, name });
-    console.log(result);
-    setIsUpdating(false);
-    setUpdatingId(null);
-    if (result) {
-      const newCharacters = characters.map(c => {
-        if (c.id === result.id) {
-          return result;
-        }
-        return c;
+    const charData = await api.characters.create(character);
+    if (charData) {
+      dispatch({
+        type: 'ADD_CHARACTER',
+        payload: charData,
       });
-      setCharacters(newCharacters);
     }
   };
 
-  const defaultName = characters.find(c => c.id === updatingId)?.name ?? '';
-  const saveHandler = isUpdating ? updateCharacter : saveCharacter;
+  const editingName = state.editingId
+    ? state.characters.find(c => c.id === state.editingId)?.name
+    : '';
 
   return (
     <section className="page">
       <h1>Genshin</h1>
       <CharacterList
-        characters={characters}
-        handleUpdate={selectUpdatingChar}
+        characters={state.characters}
+        handleUpdate={setEditingId}
         handleRemove={removeCharacter}
       />
-      <GICharacterForm saveHandler={saveHandler} defaultName={defaultName} />
+      <GICharacterForm
+        saveHandler={processFormSubmit}
+        resetHandler={() => setEditingId(null)}
+        defaultName={editingName}
+      />
     </section>
   );
+}
+
+const initialState = {
+  characters: [],
+  editingId: null,
+};
+
+function charactersReducer(state, action) {
+  switch (action.type) {
+    case 'SET_CHARACTER_LIST': {
+      return { ...state, characters: action.payload };
+    }
+    case 'SET_EDITING_CHARACTER': {
+      return { ...state, editingId: action.payload };
+    }
+    case 'ADD_CHARACTER': {
+      return { ...state, characters: [...state.characters, action.payload] };
+    }
+    case 'REMOVE_CHARACTER': {
+      return {
+        ...state,
+        characters: state.characters.filter(c => c.id !== action.payload),
+      };
+    }
+    case 'UPDATE_CHARACTER': {
+      const newCharacters = state.characters.map(c => {
+        if (c.id === action.payload.id) {
+          return action.payload;
+        }
+        return c;
+      });
+      return { ...state, characters: newCharacters };
+    }
+    default: {
+      console.error(`Invalid action type: ${action.type}`);
+    }
+  }
 }
 
 export default Genshin;

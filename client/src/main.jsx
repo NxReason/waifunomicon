@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route element={<App />}>
+        <Route path="/" element={<App />}>
           <Route path="/genshin" element={<Genshin />} />
           <Route path="/wuwa" element={<Wuwa />} />
         </Route>

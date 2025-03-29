@@ -6,7 +6,7 @@ function CharacterList({ characters, handleRemove, handleUpdate }) {
       <li className="character-item" key={c.id}>
         <span className="character-name">{c.name}</span>
         <span className="character-controls">
-          <button onClick={() => handleUpdate(c)}>Edit</button>
+          <button onClick={() => handleUpdate(c.id)}>Edit</button>
           <button onClick={() => handleRemove(c.id)}>Remove</button>
         </span>
       </li>

@@ -20,7 +20,6 @@ const characters = {
   },
 
   async create(character) {
-    console.log('in api', character);
     const path = `${BASE_PATH}`;
     const payload = {
       method: 'POST',
@@ -44,7 +43,6 @@ const characters = {
   },
 
   async update(character) {
-    console.log('in api', character);
     const path = `${BASE_PATH}/${character.id}`;
     const payload = {
       method: 'PUT',
