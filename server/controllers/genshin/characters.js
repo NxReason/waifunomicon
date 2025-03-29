@@ -1,4 +1,4 @@
-const { GICharacter } = require('../models').models;
+const { GICharacter } = require('../../models').models;
 
 async function all(req, res) {
   const characters = await GICharacter.findAll();
@@ -13,12 +13,10 @@ async function find(req, res) {
     return;
   }
   res.json({ character });
-  return;
 }
 
 async function create(req, res) {
   const reqChar = req.body.character;
-  console.log(reqChar);
   try {
     const character = await GICharacter.create(reqChar);
     res.json({ character });

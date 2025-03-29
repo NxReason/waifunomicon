@@ -25,9 +25,9 @@ app.use('/', router);
 
 const server = app.listen(PORT, async () => {
   await isConnected();
-  await sync();
   if (isDev) {
     console.log('Dev mode');
+    await sync();
     await populate();
   }
   console.log(`Server listening on port: ${PORT}`);

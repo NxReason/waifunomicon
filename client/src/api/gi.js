@@ -1,10 +1,11 @@
 const isDev = import.meta.env.MODE;
 const BASE_PATH = `${isDev ? 'http://localhost:3000' : ''}/genshin`;
+const CHARACTERS_PATH = `${BASE_PATH}/characters`;
 
 const characters = {
   async all() {
     try {
-      const path = BASE_PATH;
+      const path = CHARACTERS_PATH;
 
       const res = await fetch(path);
       if (res.ok) {
@@ -21,7 +22,7 @@ const characters = {
 
   async find(id) {
     try {
-      const path = `${BASE_PATH}/${id}`;
+      const path = `${CHARACTERS_PATH}/${id}`;
 
       const res = await fetch(path);
       if (res.ok) {
@@ -39,7 +40,7 @@ const characters = {
   },
 
   async create(character) {
-    const path = `${BASE_PATH}`;
+    const path = `${CHARACTERS_PATH}`;
     const payload = {
       method: 'POST',
       body: JSON.stringify({ character }),
@@ -62,7 +63,7 @@ const characters = {
   },
 
   async update(character) {
-    const path = `${BASE_PATH}/${character.id}`;
+    const path = `${CHARACTERS_PATH}/${character.id}`;
     const payload = {
       method: 'PUT',
       body: JSON.stringify({ character }),
@@ -85,7 +86,7 @@ const characters = {
   },
 
   async remove(id) {
-    const path = `${BASE_PATH}/${id}`;
+    const path = `${CHARACTERS_PATH}/${id}`;
     const payload = {
       method: 'DELETE',
     };

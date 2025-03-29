@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('../controllers/gi-characters');
+const controller = require('../../controllers/genshin/artifacts');
 
 router.get('/', controller.all);
 router.get('/:id', controller.find);

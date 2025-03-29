@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const genshin = require('./gi-chars');
+const genshin = require('./genshin');
 
 router.get('/', (_, res) => {
   res.json({ page: 'main' });
