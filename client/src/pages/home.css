@@ -1,0 +1,27 @@
+.main-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-nav {
+  display: flex;
+  gap: 2rem;
+}
+.pages-list {
+  width: 300px;
+  margin-top: -4rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.page-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  background: var(--color-main);
+}
+.page-item a {
+  color: var(--text-color);
+  text-decoration: none;
+}

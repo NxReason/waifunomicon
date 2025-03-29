@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import api from './api/gi';
+import api from '../api/gi';
 import CharacterList from './components/GICharacterList';
 import GICharacterForm from './components/GICharacterForm';
 

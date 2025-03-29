@@ -13,24 +13,26 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --color-main: #110f0f;
-  --color-main-dark: #0c0b0b;
-  --color-main-light: #1a1515;
-
-  --color-component: #6d17a7;
-
-  --color-text: #f3f3f3;
+  --color-bg: #1a1a1d;
+  --color-bg-hl: #2e073f;
+  --color-main: #3b1c32;
+  --color-main-hl: #7a1cac;
+  --color-sub: #6a1e55;
+  --color-sub-hl: #ad49e1;
+  --color-detail: #a64d79;
+  --color-detail-hl: #ebd3f8;
+  --color-text: #f8f8f8;
 }
 
 body {
   min-height: 100vh;
-  background-color: var(--color-main);
+  background-color: var(--color-bg);
   color: var(--color-text);
 }
 
 button {
   padding: 0.5rem 1rem;
-  background-color: var(--color-main);
+  background-color: var(--color-bg);
   color: inherit;
   font: inherit;
   border: none;
@@ -38,7 +40,7 @@ button {
 }
 button:hover {
   cursor: pointer;
-  background-color: var(--color-main-dark);
+  background-color: var(--color-main-hl);
   box-shadow: 1px 1px 2px var(--color-text);
 }
 

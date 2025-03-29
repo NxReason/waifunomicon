@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-export default function Nav() {
+export default function Nav({ children }) {
   return (
     <nav className="navigation">
       <ul className="list-page">
@@ -14,6 +14,8 @@ export default function Nav() {
             WW
           </Link>
         </li>
+
+        {children}
       </ul>
     </nav>
   );
