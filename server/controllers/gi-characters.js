@@ -5,6 +5,17 @@ async function all(req, res) {
   res.json({ characters });
 }
 
+async function find(req, res) {
+  const { id } = req.params;
+  const character = await GICharacter.findByPk(id);
+  if (!character) {
+    res.status(404).json({ err: `Character with id ${id} doesn't exist` });
+    return;
+  }
+  res.json({ character });
+  return;
+}
+
 async function create(req, res) {
   const reqChar = req.body.character;
   console.log(reqChar);
@@ -43,6 +54,7 @@ async function remove(req, res) {
 
 module.exports = {
   all,
+  find,
   create,
   update,
   remove,

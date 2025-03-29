@@ -32,7 +32,7 @@ body {
 
 button {
   padding: 0.5rem 1rem;
-  background-color: var(--color-bg);
+  background-color: var(--color-main);
   color: inherit;
   font: inherit;
   border: none;
@@ -40,7 +40,7 @@ button {
 }
 button:hover {
   cursor: pointer;
-  background-color: var(--color-main-hl);
+  background-color: var(--color-sub);
   box-shadow: 1px 1px 2px var(--color-text);
 }
 

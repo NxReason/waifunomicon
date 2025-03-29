@@ -19,6 +19,25 @@ const characters = {
     }
   },
 
+  async find(id) {
+    try {
+      const path = `${BASE_PATH}/${id}`;
+
+      const res = await fetch(path);
+      if (res.ok) {
+        const data = await res.json();
+        return data.character;
+      }
+      console.error(
+        `Error: can't find character with id ${id} (status ${res.status})`
+      );
+      return null;
+    } catch (err) {
+      console.error(`Error: fetching character with id ${id} failed (${err})`);
+      return null;
+    }
+  },
+
   async create(character) {
     const path = `${BASE_PATH}`;
     const payload = {
