@@ -1,7 +1,7 @@
 const isDev = import.meta.env.MODE;
 const BASE_PATH = `${isDev ? 'http://localhost:3000' : ''}/genshin`;
-const CHARACTERS_PATH = `${BASE_PATH}/characters`;
 
+const CHARACTERS_PATH = `${BASE_PATH}/characters`;
 const characters = {
   async all() {
     try {
@@ -105,4 +105,28 @@ const characters = {
   },
 };
 
-export default { characters };
+const ARTIFACT_PATH = `${BASE_PATH}/artifacts`;
+const artifacts = {
+  async all() {
+    try {
+      const path = ARTIFACT_PATH;
+
+      const res = await fetch(path);
+      if (res.ok) {
+        const data = await res.json();
+        return data.artifacts;
+      }
+      console.error(`Error: get all genshin artifacts (status ${res.status})`);
+      return null;
+    } catch (err) {
+      console.error(`Error: unable to get genshin artifacts (${err})`);
+      return null;
+    }
+  },
+  async find() {},
+  async create() {},
+  async update() {},
+  async remove() {},
+};
+
+export default { characters, artifacts };
