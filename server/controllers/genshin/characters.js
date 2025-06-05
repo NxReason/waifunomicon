@@ -1,7 +1,9 @@
 const { GICharacter } = require('../../models').models;
 
 async function all(req, res) {
-  const characters = await GICharacter.findAll();
+  const characters = await GICharacter.findAll({
+    include: 'GILoadout',
+  });
   res.json({ characters });
 }
 

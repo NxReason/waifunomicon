@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const conn = require('./conn');
+const Artifact = require('./Artifact');
 
 class GICharacter extends Model {}
 
@@ -17,5 +18,8 @@ GICharacter.init(
     timestamps: false,
   }
 );
+
+Artifact.belongsToMany(GICharacter, { through: 'GILoadout' });
+GICharacter.belongsToMany(Artifact, { through: 'GILoadout' });
 
 module.exports = GICharacter;
