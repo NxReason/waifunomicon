@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import api from '../../api/gi';
+import api from '../../api/genshin';
 
 export default function Character() {
   const params = useParams();

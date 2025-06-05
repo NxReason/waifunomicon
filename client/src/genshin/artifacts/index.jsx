@@ -1,6 +1,6 @@
 import './artifacts.css';
 import { useEffect, useReducer } from 'react';
-import api from '../../api/gi';
+import api from '../../api/genshin';
 import List from './List';
 
 export default function Artifacts() {

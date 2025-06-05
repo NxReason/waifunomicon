@@ -1,0 +1,17 @@
+.artifact-list {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.artifact-item {
+  padding: 1rem;
+  background-color: var(--color-main);
+}
+.artifact-item-name {
+  margin-bottom: 0.2rem;
+}
+.artifact-item-desc {
+  display: flex;
+  justify-content: space-between;
+}

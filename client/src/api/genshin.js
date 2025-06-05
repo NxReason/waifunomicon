@@ -1,8 +1,10 @@
+import { makeRequestParams, makeRequest } from './utils';
 const isDev = import.meta.env.MODE;
 const BASE_PATH = `${isDev ? 'http://localhost:3000' : ''}/genshin`;
 
 const CHARACTERS_PATH = `${BASE_PATH}/characters`;
 const characters = {
+  subpath: 'characters',
   async all() {
     try {
       const path = CHARACTERS_PATH;
@@ -25,14 +27,8 @@ const characters = {
       const path = `${CHARACTERS_PATH}/${id}`;
 
       const res = await fetch(path);
-      if (res.ok) {
-        const data = await res.json();
-        return data.character;
-      }
-      console.error(
-        `Error: can't find character with id ${id} (status ${res.status})`
-      );
-      return null;
+      const data = await res.json();
+      return data.character;
     } catch (err) {
       console.error(`Error: fetching character with id ${id} failed (${err})`);
       return null;
@@ -40,26 +36,31 @@ const characters = {
   },
 
   async create(character) {
-    const path = `${CHARACTERS_PATH}`;
-    const payload = {
-      method: 'POST',
-      body: JSON.stringify({ character }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+    // const path = `${CHARACTERS_PATH}`;
+    // const payload = {
+    //   method: 'POST',
+    //   body: JSON.stringify({ character }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // };
+    const requestOptions = makeRequestParams(BASE_PATH, 'characters')('POST', {
+      character,
+    });
+    const res = await makeRequest(requestOptions);
+    console.log(res);
 
-    try {
-      const res = await fetch(path, payload);
-      if (res.ok) {
-        const data = await res.json();
-        return data.character;
-      }
-      console.error(`Error: creating character (status ${res.status})`);
-    } catch (err) {
-      console.error(`Error: creating character (${err})`);
-    }
-    return null;
+    // try {
+    //   const res = await fetch(...requestOptions);
+    //   if (res.ok) {
+    //     const data = await res.json();
+    //     return data.character;
+    //   }
+    //   console.error(`Error: creating character (status ${res.status})`);
+    // } catch (err) {
+    //   console.error(`Error: creating character (${err})`);
+    // }
+    // return null;
   },
 
   async update(character) {

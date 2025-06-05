@@ -1,6 +1,6 @@
 import './characters.css';
 import { useEffect, useReducer } from 'react';
-import api from '../../api/gi';
+import api from '../../api/genshin';
 import Form from './Form';
 import List from './List';
 
