@@ -3,6 +3,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import router from './routes/index.js';
+import * as db from './models/db.js';
 
 const app = express();
 
@@ -22,6 +23,10 @@ app.use(express.json());
 app.use('/', router);
 
 const server = app.listen(PORT, async () => {
+  const isDbConnected = await db.auth();
+  if (!isDbConnected) return;
+  await db.sync();
+
   console.log(`Server listening on port: ${PORT}`);
 });
 
