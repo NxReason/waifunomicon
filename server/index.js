@@ -1,10 +1,8 @@
-const dotenv = require('dotenv');
-dotenv.config();
+import 'dotenv/config';
 
-const express = require('express');
-const cors = require('cors');
-const router = require('./routes');
-const { isConnected, populate, sync } = require('./models');
+import express from 'express';
+import cors from 'cors';
+import router from './routes/index.js';
 
 const app = express();
 
@@ -24,12 +22,6 @@ app.use(express.json());
 app.use('/', router);
 
 const server = app.listen(PORT, async () => {
-  await isConnected();
-  if (isDev) {
-    console.log('Dev mode');
-    await sync();
-    await populate();
-  }
   console.log(`Server listening on port: ${PORT}`);
 });
 

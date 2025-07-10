@@ -1,9 +1,8 @@
-const router = require('express').Router();
-const genshin = require('./genshin');
+import { Router } from 'express';
+const router = Router();
 
-router.get('/', (_, res) => {
-  res.json({ page: 'main' });
+router.get('/', (req, res) => {
+  res.send('main page');
 });
-router.use('/genshin', genshin);
 
-module.exports = router;
+export default router;
