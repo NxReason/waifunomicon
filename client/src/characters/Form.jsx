@@ -12,7 +12,7 @@ export default function Form({ character, save, errors }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    save(name);
+    save({ name });
   };
 
   return (

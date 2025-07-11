@@ -1,3 +1,6 @@
+.btn-new-character {
+  margin-bottom: 1rem;
+}
 .character-list {
   list-style: none;
   display: grid;

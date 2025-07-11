@@ -1,16 +1,26 @@
 import { Link } from 'react-router';
+import { useCharactersDispatch } from './CharacterContext';
 
 export default function List({ characters }) {
+  const dispatch = useCharactersDispatch();
+
+  const handleDelete = id => {
+    dispatch({
+      type: 'deleted',
+      id,
+    });
+  };
+
   const cards = characters?.map(c => (
     <li className="character-card" key={c.id}>
       <Link to={`/characters/${c.id}`} className="character-card-name">
-        {c.Name}
+        {c.name}
       </Link>
       <div className="character-card-controls">
         <Link to={`/characters/${c.id}/edit`}>
           <i className="icon icon-edit"></i>
         </Link>
-        <i className="icon icon-delete"></i>
+        <i className="icon icon-delete" onClick={() => handleDelete(c.id)}></i>
       </div>
     </li>
   ));

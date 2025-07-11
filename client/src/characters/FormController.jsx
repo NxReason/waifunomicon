@@ -1,29 +1,46 @@
-import { useParams, Link } from 'react-router';
+import { useParams, Link, useNavigate } from 'react-router';
 import Form from './Form';
 import { useState } from 'react';
+import { useCharacters, useCharactersDispatch } from './CharacterContext';
 
 export default function FormController() {
-  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   const params = useParams();
-  const [character, save] = params.id
-    ? [
-        { id: 1, name: 'Raiden' },
-        name => {
-          console.log(`updating ${name}`);
-        },
-      ]
-    : [
-        null,
-        name => {
-          const [isValid, errors] = validate({ name });
-          setErrors(errors);
-          if (!isValid) {
-            return;
-          }
+  const [errors, setErrors] = useState({});
+  const characters = useCharacters();
+  const dispatch = useCharactersDispatch();
 
-          console.log(`saving ${name}`);
-        },
-      ];
+  const id = parseInt(params.id);
+  const character = characters.find(c => c.id === id);
+
+  const handleCreate = ({ name }) => {
+    const [isValid, errors] = validate({ name });
+    if (!isValid) {
+      setErrors(errors);
+      return;
+    }
+
+    dispatch({
+      type: 'added',
+      character: { id: Math.round(Math.random() * 1000000), name },
+    });
+    navigate('/');
+  };
+  const handleUpdate = ({ name }) => {
+    const [isValid, errors] = validate({ name });
+    if (!isValid) {
+      setErrors(errors);
+      return;
+    }
+
+    dispatch({
+      type: 'updated',
+      character: { id, name },
+    });
+    navigate('/');
+  };
+
+  const save = character ? handleUpdate : handleCreate;
 
   return <Form character={character} save={save} errors={errors} />;
 }
