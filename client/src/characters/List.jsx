@@ -1,14 +1,18 @@
 import { Link } from 'react-router';
 import { useCharactersDispatch } from './CharacterContext';
+import { remove } from '../api/characters.js';
 
 export default function List({ characters }) {
   const dispatch = useCharactersDispatch();
 
-  const handleDelete = id => {
-    dispatch({
-      type: 'deleted',
-      id,
-    });
+  const handleDelete = async id => {
+    const { ok } = await remove(id);
+    if (ok) {
+      dispatch({
+        type: 'deleted',
+        id,
+      });
+    }
   };
 
   const cards = characters?.map(c => (

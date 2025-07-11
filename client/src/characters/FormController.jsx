@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router';
 import Form from './Form';
 import { useState } from 'react';
 import { useCharacters, useCharactersDispatch } from './CharacterContext';
+import { save, update } from '../api/characters.js';
 
 export default function FormController() {
   const navigate = useNavigate();
@@ -13,36 +14,28 @@ export default function FormController() {
   const id = parseInt(params.id);
   const character = characters.find(c => c.id === id);
 
-  const handleCreate = ({ name }) => {
+  const saveHandler = async ({ name }) => {
     const [isValid, errors] = validate({ name });
     if (!isValid) {
       setErrors(errors);
       return;
     }
 
-    dispatch({
-      type: 'added',
-      character: { id: Math.round(Math.random() * 1000000), name },
-    });
-    navigate('/');
-  };
-  const handleUpdate = ({ name }) => {
-    const [isValid, errors] = validate({ name });
-    if (!isValid) {
-      setErrors(errors);
-      return;
+    const request = () => (character ? update(id, { name }) : save({ name }));
+    const { ok, data } = await request();
+
+    if (ok) {
+      const action = {
+        type: character ? 'updated' : 'added',
+        character: data,
+      };
+      dispatch(action);
+
+      navigate('/');
     }
-
-    dispatch({
-      type: 'updated',
-      character: { id, name },
-    });
-    navigate('/');
   };
 
-  const save = character ? handleUpdate : handleCreate;
-
-  return <Form character={character} save={save} errors={errors} />;
+  return <Form character={character} save={saveHandler} errors={errors} />;
 }
 
 function validate({ name }) {
