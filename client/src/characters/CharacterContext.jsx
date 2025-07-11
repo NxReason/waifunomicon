@@ -10,10 +10,7 @@ export function useCharactersDispatch() {
   return useContext(CharactersDispatchContext);
 }
 
-const initialCharacters = [
-  { id: 1, name: 'Raiden' },
-  { id: 2, name: 'Skirk' },
-];
+const initialCharacters = [];
 export function CharactersProvider({ children }) {
   const [characters, dispatch] = useReducer(
     characterReducer,

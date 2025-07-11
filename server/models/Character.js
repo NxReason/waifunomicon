@@ -4,7 +4,7 @@ import sequelize from './db.js';
 const Character = sequelize.define(
   'Character',
   {
-    Name: {
+    name: {
       type: DataTypes.STRING(128),
       allowNull: false,
       unique: true,

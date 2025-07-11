@@ -13,7 +13,7 @@ export async function find(req, res) {
 
 export async function save(req, res) {
   const { name } = req.body;
-  const c = await Character.create({ Name: name });
+  const c = await Character.create({ name });
   res.json(c);
 }
 
@@ -22,7 +22,7 @@ export async function update(req, res) {
   const { name } = req.body;
 
   const c = await Character.findByPk(id);
-  c.Name = name;
+  c.name = name;
   c.save();
 
   res.json(c);
