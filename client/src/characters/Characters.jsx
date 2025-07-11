@@ -1,5 +1,9 @@
+import { useContext } from 'react';
+import { CharactersContext } from './CharacterContext';
 import './Characters.css';
 import List from './List';
+import { useReducer } from 'react';
+import characterReducer from './characterReducer';
 
 const initialCharacters = [
   { id: 1, Name: 'Raiden' },
@@ -12,9 +16,11 @@ const initialCharacters = [
 ];
 
 export default function Characters() {
+  // const characters = useContext(CharactersContext);
+  const [characters] = useReducer(characterReducer, initialCharacters);
   return (
     <div className="page characters-page">
-      <List characters={initialCharacters} />
+      <List characters={characters} />
     </div>
   );
 }

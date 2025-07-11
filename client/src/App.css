@@ -31,7 +31,47 @@
   width: 300px;
   border: 1px solid var(--color-detail);
   border-radius: 0.5rem;
+  padding: 0.3rem 0.7rem;
 }
 .form-group input[type='text']:focus {
   border: 1px solid var(--color-detail-hl);
+}
+
+.form-error {
+  color: var(--color-detail-hl);
+}
+
+.form-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-main);
+}
+.btn:hover {
+  cursor: pointer;
+  background-color: var(--color-sub);
+  box-shadow: 1px 1px 2px var(--color-detail-hl);
+}
+
+.icon {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: 0.2s ease-in-out;
+}
+.icon:hover {
+  cursor: pointer;
+  transform: scale(1.2, 1.2);
+}
+.icon-edit {
+  background-image: url('/icons/edit.svg');
+}
+.icon-delete {
+  background-image: url('/icons/delete.svg');
 }

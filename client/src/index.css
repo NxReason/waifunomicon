@@ -36,26 +36,17 @@ a {
 }
 
 button {
-  padding: 0.5rem 1rem;
-  background-color: var(--color-main);
   color: inherit;
   font: inherit;
   border: none;
   transition: all 0.12s ease-in;
 }
-button:hover {
-  cursor: pointer;
-  background-color: var(--color-sub);
-  box-shadow: 1px 1px 2px var(--color-text);
-}
 
 input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid var(--color-text);
   color: var(--color-text);
   font: inherit;
-  padding: 0.3rem 0.7rem;
 }
 input:focus {
   outline: none;

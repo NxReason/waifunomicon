@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 
-export default function Form({ character, save }) {
+export default function Form({ character, save, errors }) {
   const headerText = character ? character.name : 'New character';
   const submitText = character ? 'Update' : 'Save';
 
@@ -30,11 +30,12 @@ export default function Form({ character, save }) {
             value={name}
             onInput={handleNameInput}
           />
+          <p className="form-error">{errors.name}</p>
         </div>
 
         <div className="form-controls">
-          <button className="form-control">{submitText}</button>
-          <Link className="form-control" to="/">
+          <button className="btn">{submitText}</button>
+          <Link className="btn" to="/">
             Cancel
           </Link>
         </div>
