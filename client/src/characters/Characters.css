@@ -1,0 +1,16 @@
+.character-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 100px;
+  gap: 1rem;
+}
+.character-card {
+  background-color: var(--color-main);
+}
+.character-card a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem 0.5rem;
+}
