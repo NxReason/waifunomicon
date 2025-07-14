@@ -1,18 +1,28 @@
-import { DataTypes } from 'sequelize';
-import sequelize from './db.js';
-
-const ArtifactSet = sequelize.define(
-  'ArtifactSet',
-  {
-    name: {
-      type: DataTypes.STRING(256),
-      unique: true,
-      allowNull: false,
+export default (sequelize, DataTypes) => {
+  const ArtifactSet = sequelize.define(
+    'ArtifactSet',
+    {
+      name: {
+        type: DataTypes.STRING(256),
+        unique: true,
+        allowNull: false,
+      },
     },
-  },
-  {
-    timestamps: false,
-  }
-);
+    {
+      timestamps: false,
+    }
+  );
 
-export default ArtifactSet;
+  ArtifactSet.associate = models => {
+    ArtifactSet.belongsToMany(models.Character, {
+      through: {
+        model: 'Character_ArtifactSet',
+        timestamps: false,
+      },
+      as: 'characters',
+      foreignKey: 'artifactSetId',
+    });
+  };
+
+  return ArtifactSet;
+};

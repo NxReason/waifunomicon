@@ -1,4 +1,5 @@
-import ArtifactSet from '../models/ArtifactSet.js';
+import { models } from '../models/db.js';
+const { ArtifactSet } = models;
 
 export async function all(req, res) {
   const as = await ArtifactSet.findAll();
