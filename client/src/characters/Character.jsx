@@ -11,13 +11,13 @@ export default function Character() {
   const headerText = character?.name ?? 'Character not found';
 
   return (
-    <div className="page">
-      <Link className="btn" to="/">
+    <>
+      <Link className="btn" to="/characters">
         All characters
       </Link>
       <h1>{headerText}</h1>
 
       <p>Name: {character?.name}</p>
-    </div>
+    </>
   );
 }

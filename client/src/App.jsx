@@ -8,6 +8,9 @@ import NotFound from './pages/NotFound';
 import Character from './characters/Character';
 import FormController from './characters/FormController';
 import * as charactersAPI from './api/characters';
+import Home from './pages/Home';
+import ArtifactSets from './artifactSets/ArtifactSets';
+import Layout from './Layout';
 
 function App() {
   const dispatch = useCharactersDispatch();
@@ -24,12 +27,22 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Characters />} />
-      <Route path="/characters/:id" element={<Character />} />
-      <Route path="/characters/new" element={<FormController />} />
-      <Route path="/characters/:id/edit" element={<FormController />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
 
-      <Route path="/*" element={<NotFound />} />
+        <Route path="characters">
+          <Route index element={<Characters />} />
+          <Route path=":id" element={<Character />} />
+          <Route path="new" element={<FormController />} />
+          <Route path=":id/edit" element={<FormController />} />
+        </Route>
+
+        <Route path="artifact-sets">
+          <Route index element={<ArtifactSets />} />
+        </Route>
+
+        <Route path="/*" element={<NotFound />} />
+      </Route>
     </Routes>
   );
 }

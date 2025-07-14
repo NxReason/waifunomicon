@@ -16,7 +16,7 @@ export default function Form({ character, save, errors }) {
   };
 
   return (
-    <div className="page">
+    <>
       <h1 className="page-header">{headerText}</h1>
       <form onSubmit={handleSubmit} className="form">
         <div className="form-group">
@@ -35,11 +35,11 @@ export default function Form({ character, save, errors }) {
 
         <div className="form-controls">
           <button className="btn">{submitText}</button>
-          <Link className="btn" to="/">
+          <Link className="btn" to="/characters">
             Cancel
           </Link>
         </div>
       </form>
-    </div>
+    </>
   );
 }

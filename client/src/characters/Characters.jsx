@@ -7,11 +7,11 @@ import List from './List';
 export default function Characters() {
   const characters = useContext(CharactersContext);
   return (
-    <div className="page characters-page">
+    <>
       <Link className="btn btn-new-character" to="/characters/new">
         New character
       </Link>
       <List characters={characters} />
-    </div>
+    </>
   );
 }
