@@ -19,3 +19,7 @@ export async function update(id, data) {
 export async function remove(id) {
   return request(`/characters/${id}`, 'DELETE');
 }
+
+export async function addSet(charId, setId) {
+  return request(`/characters/${charId}/add-set`, 'POST', { setId });
+}

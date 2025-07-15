@@ -43,3 +43,20 @@ export async function remove(req, res) {
 
   res.json(c);
 }
+
+export async function addSet(req, res) {
+  const { id } = req.params;
+  const { setId } = req.body;
+
+  const c = await Character.findByPk(id, {
+    include: {
+      model: ArtifactSet,
+      as: 'artifactSets',
+      through: { attributes: [] },
+    },
+  });
+
+  c.addArtifactSet(setId);
+
+  res.json(c);
+}

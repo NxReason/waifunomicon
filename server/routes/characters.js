@@ -8,5 +8,6 @@ router.get('/:id', controller.find);
 router.post('/', controller.save);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.remove);
+router.post('/:id/add-set', controller.addSet);
 
 export default router;

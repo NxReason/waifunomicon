@@ -1,16 +1,24 @@
 import { Link, useParams } from 'react-router';
 import { useCharacters } from './CharacterContext';
 import { useArtifactSets } from '../artifactSets/ArtifactSetsContext';
-import { useEffect } from 'react';
-import { find } from '../api/characters';
+import { useEffect, useState } from 'react';
+import { find, addSet } from '../api/characters';
 import { useReducer } from 'react';
 import CharacterSets from './CharacterSets';
 
-const initialState = { artifactSets: [], selectorVisible: false };
+const initialState = {
+  artifactSets: [],
+  selectorVisible: false,
+  removingSet: false,
+  addingSet: false,
+};
 export default function Character() {
   const params = useParams();
   const characters = useCharacters();
   const allSets = useArtifactSets();
+
+  const [newSetId, setNewSetId] = useState(null);
+
   const [state, dispatch] = useReducer(artifactSetsReducer, initialState);
   const { artifactSets } = state;
   const id = parseInt(params.id);
@@ -29,20 +37,45 @@ export default function Character() {
     });
   }, [character]);
 
+  useEffect(() => {
+    if (allSets.length > 0) {
+      setNewSetId(allSets[0].id);
+    }
+  }, [allSets]);
+
   if (!character) {
     return <CharacterNotFound />;
   }
 
-  const showNewSetSelector = () => {
+  const showSetSelect = () => {
     dispatch({
       type: 'showSelector',
     });
   };
 
-  const hideSetSelector = () => {
+  const hideSetSelect = () => {
     dispatch({
       type: 'hideSelector',
     });
+  };
+
+  const saveSet = async () => {
+    dispatch({
+      type: 'requestAddSet',
+    });
+
+    const { ok, data } = await addSet(id, newSetId);
+
+    if (ok) {
+      dispatch({
+        type: 'resolveAddSet',
+        artifactSets: data.artifactSets,
+      });
+    } else {
+      dispatch({
+        type: 'rejectAddSet',
+      });
+    }
   };
 
   return (
@@ -55,9 +88,13 @@ export default function Character() {
       <CharacterSets
         artifactSets={artifactSets}
         allSets={allSets}
+        selectedSet={newSetId}
+        setNewSet={setNewSetId}
         selectorVisible={state.selectorVisible}
-        handleAdd={showNewSetSelector}
-        handleCancel={hideSetSelector}
+        addingSet={state.addingSet}
+        handleAdd={showSetSelect}
+        handleSave={saveSet}
+        handleCancel={hideSetSelect}
       />
     </>
   );
@@ -82,6 +119,12 @@ function artifactSetsReducer(state, action) {
       return { ...state, selectorVisible: true };
     case 'hideSelector':
       return { ...state, selectorVisible: false };
+    case 'requestAddSet':
+      return { ...state, addingSet: true };
+    case 'resolveAddSet':
+      return { ...state, addingSet: false, artifactSets: action.artifactSets };
+    case 'rejectAddSet':
+      return { ...state, addingSet: false };
     default:
       throw new Error('Invalid action type');
   }
