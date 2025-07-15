@@ -1,13 +1,18 @@
 import { Link, useParams } from 'react-router';
 import { useCharacters } from './CharacterContext';
+import { useArtifactSets } from '../artifactSets/ArtifactSetsContext';
 import { useEffect } from 'react';
 import { find } from '../api/characters';
 import { useReducer } from 'react';
+import CharacterSets from './CharacterSets';
 
+const initialState = { artifactSets: [], selectorVisible: false };
 export default function Character() {
   const params = useParams();
   const characters = useCharacters();
-  const [artifactSets, dispatch] = useReducer(artifactSetsReducer, []);
+  const allSets = useArtifactSets();
+  const [state, dispatch] = useReducer(artifactSetsReducer, initialState);
+  const { artifactSets } = state;
   const id = parseInt(params.id);
 
   const character = characters.find(c => c.id === id);
@@ -24,32 +29,59 @@ export default function Character() {
     });
   }, [character]);
 
-  const headerText = character?.name ?? 'Character not found';
+  if (!character) {
+    return <CharacterNotFound />;
+  }
+
+  const showNewSetSelector = () => {
+    dispatch({
+      type: 'showSelector',
+    });
+  };
+
+  const hideSetSelector = () => {
+    dispatch({
+      type: 'hideSelector',
+    });
+  };
 
   return (
     <>
       <Link className="btn" to="/characters">
         All characters
       </Link>
-      <h1>{headerText}</h1>
+      <h1 className="character-header">{character.name}</h1>
 
-      <p>Name: {character?.name}</p>
-      <CharacterSets artifactSets={artifactSets} />
+      <CharacterSets
+        artifactSets={artifactSets}
+        allSets={allSets}
+        selectorVisible={state.selectorVisible}
+        handleAdd={showNewSetSelector}
+        handleCancel={hideSetSelector}
+      />
     </>
   );
 }
 
-function CharacterSets({ artifactSets }) {
-  const items = artifactSets.map(as => {
-    return <li key={as.id}>{as.name}</li>;
-  });
-  return <ul className="character-artifact-sets">{items}</ul>;
+function CharacterNotFound() {
+  return (
+    <>
+      <Link className="btn" to="/characters">
+        All characters
+      </Link>
+      <h1 className="character-header">Character not found</h1>
+    </>
+  );
 }
 
 function artifactSetsReducer(state, action) {
   switch (action.type) {
     case 'set':
-      return action.artifactSets;
+      return { ...state, artifactSets: action.artifactSets };
+    case 'showSelector':
+      return { ...state, selectorVisible: true };
+    case 'hideSelector':
+      return { ...state, selectorVisible: false };
     default:
       throw new Error('Invalid action type');
   }

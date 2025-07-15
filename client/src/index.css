@@ -42,14 +42,61 @@ button {
   transition: all 0.12s ease-in;
 }
 
-input {
+input,
+select {
   background-color: transparent;
   border: none;
   color: var(--color-text);
   font: inherit;
 }
-input:focus {
+input:focus,
+select:focus {
   outline: none;
+}
+select,
+::picker(select) {
+  appearance: base-select;
+}
+select {
+  background-color: var(--color-detail);
+  padding: 0.5rem 1rem;
+}
+select::picker-icon {
+  transition: 0.4s rotate;
+}
+select:open::picker-icon {
+  rotate: 180deg;
+}
+select:hover {
+  cursor: pointer;
+}
+::picker(select) {
+  border: none;
+  background-color: transparent;
+  margin-top: 0.25rem;
+}
+option {
+  transition: all 0.1s ease-in-out;
+  background: var(--color-detail);
+  color: var(--color-text);
+  padding: 0.5rem;
+}
+option:first-of-type {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+option:last-of-type {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+option::checkmark {
+  display: none;
+}
+option:checked {
+  font-weight: bold;
+  background-color: var(--color-main);
+}
+option:hover {
+  cursor: pointer;
+  background: var(--color-sub);
 }
 
 @media (prefers-color-scheme: light) {

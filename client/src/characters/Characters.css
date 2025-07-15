@@ -28,3 +28,33 @@
   display: flex;
   gap: 0.5rem;
 }
+.character-header {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.character-as-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.character-as-item {
+  background-color: var(--color-main);
+  padding: 0.5rem 1rem;
+}
+.btn-add-character-as {
+  border-radius: 50%;
+  margin-top: 1rem;
+}
+.character-new-as-form {
+  margin-top: 1rem;
+}
+.character-new-as-select {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+.add-character-as-controls {
+  display: flex;
+  gap: 1rem;
+}
